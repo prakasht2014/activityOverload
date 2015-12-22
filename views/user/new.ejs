@@ -1,16 +1,26 @@
 <form action="/user/create" method="post" class="form-signin">
   <h2 class="form-signin-heading">Create an account</h2>
 
-  <input type="text" class="form-control" placeholder="your name" name="name">
+  <div class="control-group">
+    <input type="text" class="form-control" placeholder="your name" name="name">
+  </div>
 
-  <input type="text" class="form-control" placeholder="your title" name="title">
+  <div class="control-group">
+    <input type="text" class="form-control" placeholder="your title" name="title">
+  </div>
 
-  <input type="text" class="form-control" placeholder="email address" name="email">
+  <div class="control-group">
+    <input type="text" class="form-control" placeholder="email address" name="email">
+  </div>
 
-  <input type="password" class="form-control" placeholder="password" name="password">
+  <div class="control-group">
+    <input type="password" class="form-control" placeholder="password" name="password">
+  </div>
 
-  <input type="password" class="form-control" placeholder="password confirmation" name="confirmation">
-  <br/>
+  <div class="control-group">
+    <input type="password" class="form-control" placeholder="password confirmation" name="confirmation">
+    <br/>
+  </div>
 
   <input type="submit" class="btn btn-lg btn-primary btn-black" value="Create Account"/>
   <input type="hidden" name="_csrf" value="<%= _csrf %>"/>

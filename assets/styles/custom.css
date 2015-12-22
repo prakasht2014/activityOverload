@@ -12,7 +12,12 @@ body {
   letter-spacing: -1px;
   margin-bottom: 30px;
   font-weight: normal;
-  color: gray;
+  color: #cccccc;
+}
+
+.top-bar {
+  background: url(../images/topBar.png) no-repeat center;
+  background-size: cover;
 }
 
 .container .gray {
