@@ -13,17 +13,17 @@ module.exports = {
 		req.session.flash = {};
 	},
 
-	create: function(req, res, next){
+	create: function(req, res){
 
 		// Create a User with the params sent from
 		// the sign-up form --> new.ejs
 		User.create(req.params.all(), function userCreated(err, user){
-			// If there's an error
+
 			if (err) {
-				console.log(err);
 				req.session.flash = {
 					err: err
-				}
+				};
+
 				// If error redirect back to sign-up apge
 				return res.redirect('/user/new');
 			}
