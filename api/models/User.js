@@ -7,27 +7,41 @@
 
 module.exports = {
 
-  schema: true,
-  
-  attributes: {
+    schema: true,
 
-    name: {
-      type: 'string',
-      required: true
-    },
+    attributes: {
 
-    title: {
-      type: 'string'
-    },
+        name: {
+            type: 'string',
+            required: true
+        },
 
-    email: {
-      type: 'email',
-      required: true,
-      unique: true
-    },
+        title: {
+            type: 'string'
+        },
 
-    encryptedPassword: {
-      type: 'string'
+        email: {
+            type: 'email',
+            required: true,
+            unique: true
+        },
+
+        encryptedPassword: {
+            type: 'string'
+        },
+
+        'beforeCreate': function (values, next) {
+            // This checks to make sure the password and confirmation match before creating record
+            if (!values.password || values.password != values.confirmation) {
+                return next({ err: ["Passwrod doesn't match password confirmation"] });
+            }
+
+            require('bcrypt').hash(values.password, 10, function passwordEncrypted(err, encryptedPasswrod) {
+                if (err) return next(err);
+                
+                values.encryptedPassword = encryptedPasswrod;
+                next();
+            });
+        }
     }
-  }
 };
