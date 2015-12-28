@@ -32,7 +32,8 @@ module.exports = {
 		User.findOne(req.param('id'), function foundUser(err, user){
 			if (err) return next(err);
 			if (!user) return next();
-			res.view({
+
+			return res.view({
 				user: user
 			});
 		});
@@ -54,8 +55,9 @@ module.exports = {
 		// Find the user from the id passed in via params
 		User.findOne(req.param('id'), function foundUser(err, user){
 			if (err) return next(err);
-			if (!user) return next();
-			res.view({
+			if (!user) return next('User doesn\'t exist.');
+
+			return res.view({
 				user: user
 			});
 		});
@@ -69,6 +71,19 @@ module.exports = {
 			}
 
 			return res.redirect('/user/show/' + req.param('id'));
+		});
+	},
+
+	'destroy': function(req, res, next){
+		User.findOne(req.param('id'), function foundUser(err, user) {
+			if (err) return next(err);
+			if (!user) return next('User doesn\'t exist.');
+
+			User.destroy(req.param('id'), function userDestroyed(err){
+				if (err) return next(err);
+			});
+
+			return res.redirect('/user');
 		});
 	}
 };
