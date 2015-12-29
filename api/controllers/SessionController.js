@@ -1,5 +1,3 @@
-var bcrypt = require('bcrypt');
-
 module.exports = {
 
     'new': function (req, res) {
@@ -13,9 +11,9 @@ module.exports = {
         // redirect the browser back to the sign-in form.
         if (!req.param('email') || !req.param('password')) {
 
-            var usernamePasswordRequiredError = [{ 
-                name: 'usernamePasswordRequired', 
-                message: 'You must enter both a username and password.' 
+            var usernamePasswordRequiredError = [{
+                name: 'usernamePasswordRequired',
+                message: 'You must enter both a username and password.'
             }];
 	        
             // Remember that err is the object being passed down, whose value is another object with
@@ -33,9 +31,9 @@ module.exports = {
             if (err) return next(err);
 
             if (!user) {
-                var noAccountError = [{ 
-                    name: 'noAccount', 
-                    message: 'The email address ' + req.param('email') + ' not found.' 
+                var noAccountError = [{
+                    name: 'noAccount',
+                    message: 'The email address ' + req.param('email') + ' not found.'
                 }];
                 req.session.flash = {
                     err: noAccountError
@@ -44,12 +42,12 @@ module.exports = {
             }
            
             // Compare password from the form params to the encrypted password of the user found.
-            bcrypt.compare(req.param('password'), user.encryptedPassword, function (err, valid) {               
+            require('bcrypt').compare(req.param('password'), user.encryptedPassword, function (err, valid) {
                 if (err) return next(err);
-                
+
                 if (!valid) {
                     var usernamePasswordMismatchError = [{
-                        name: 'usernamePasswordMismatch', 
+                        name: 'usernamePasswordMismatch',
                         message: 'Invalid username and password combination.'
                     }];
                     req.session.flash = {
@@ -67,8 +65,8 @@ module.exports = {
             });
         });
     },
-    
-    'destroy': function(req, res, next) {
+
+    'destroy': function (req, res, next) {
         
         // Wipe out the session (log out)
         req.session.destroy();
