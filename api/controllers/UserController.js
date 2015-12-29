@@ -24,7 +24,7 @@ module.exports = {
             }
             // After successfully creating the user
             // redirect to the show action
-            return res.redirect('/user/show/' + user.id);
+            return res.redirect('/session/new');
         });
     },
 
