@@ -19,11 +19,11 @@ module.exports = {
 				req.session.flash = {
 					err: err
 				};
-				// If error redirect back to sign-up apge
+				// If error redirect back to sign-up page
 				return res.redirect('/user/new');
 			}
 			// After successfully creating the user
-			// redirect to the show action
+			// redirect to login page.
 			return res.redirect('/user/show/' + user.id);
 		});
 	},
