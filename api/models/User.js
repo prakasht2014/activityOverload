@@ -31,7 +31,7 @@ module.exports = {
         }
     },
 
-    'beforeCreate': function (values, next) {
+    beforeCreate: function (values, next) {
             
         // This checks to make sure the password and confirmation match before creating record
         if (!values.password || values.password != values.confirmation) {

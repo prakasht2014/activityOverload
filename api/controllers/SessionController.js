@@ -1,11 +1,11 @@
 module.exports = {
 
-    'new': function (req, res) {
+    new: function (req, res) {
 
         return res.view('session/new');
     },
 
-    'create': function (req, res, next) {
+    create: function (req, res, next) {
 	    
         // Check for email and password in params sent via the form, if none
         // redirect the browser back to the sign-in form.
@@ -66,7 +66,7 @@ module.exports = {
         });
     },
 
-    'destroy': function (req, res, next) {
+    destroy: function (req, res, next) {
         
         // Wipe out the session (log out)
         req.session.destroy();
