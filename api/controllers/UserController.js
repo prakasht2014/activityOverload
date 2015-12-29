@@ -7,11 +7,11 @@
 
 module.exports = {
 
-    'new': function (req, res) {
+    new: function (req, res) {
         return res.view();
     },
 
-    'create': function (req, res) {
+    create: function (req, res) {
         // Create a User with the params sent from
         // the sign-up form --> new.ejs
         User.create(req.params.all(), function userCreated(err, user) {
@@ -22,13 +22,18 @@ module.exports = {
                 // If error redirect back to sign-up page
                 return res.redirect('/user/new');
             }
+            
+            // Log user in
+            req.session.authenticated = true;
+            req.session.User = user;
+            
             // After successfully creating the user
             // redirect to the show action
-            return res.redirect('/session/new');
+            return res.redirect('/user/show/' + user.id);
         });
     },
 
-    'show': function (req, res, next) {
+    show: function (req, res, next) {
         User.findOne(req.param('id'), function foundUser(err, user) {
             if (err) return next(err);
             if (!user) return next();
@@ -39,7 +44,7 @@ module.exports = {
         });
     },
 
-    'index': function (req, res, next) {
+    index: function (req, res, next) {
         
         // Get an array of all users in the User collection(e.g. table)
         User.find(function foundUsers(err, users) {
@@ -52,7 +57,7 @@ module.exports = {
     },
 
     // Render the edit view
-    'edit': function (req, res, next) {
+    edit: function (req, res, next) {
         // Find the user from the id passed in via params
         User.findOne(req.param('id'), function foundUser(err, user) {
             if (err) return next(err);
@@ -65,7 +70,7 @@ module.exports = {
     },
 
     // Process the info from edit view
-    'update': function (req, res, next) {
+    update: function (req, res, next) {
         User.update(req.param('id'), req.params.all(), function userUpdated(err) {
             if (err) {
                 return res.redirect('/user/edit/' + req.param('id'));
@@ -75,7 +80,7 @@ module.exports = {
         });
     },
 
-    'destroy': function (req, res, next) {
+    destroy: function (req, res, next) {
         User.findOne(req.param('id'), function foundUser(err, user) {
             if (err) return next(err);
             if (!user) return next('User doesn\'t exist.');
