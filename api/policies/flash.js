@@ -8,5 +8,5 @@ module.exports = function(req, res, next){
 
   //clear flash
   req.session.flash = {};  
-  next();
+  return next();
 };
